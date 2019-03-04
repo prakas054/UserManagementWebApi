@@ -61,12 +61,12 @@ namespace UserManagement.Controllers
         }
 
         [HttpPut]
-        [Route("ChangePassword/{UserName}/{OldPassword}/{NewPassword}/{ConfirmPassword}")]
+        [Route("ChangePassword/{UserName}/{OldPassword}/{NewPassword}")]
 
-        public IHttpActionResult ChangePassword(string UserName, string OldPassword, string NewPassword, string ConfirmPassword)
+        public IHttpActionResult ChangePassword(string UserName, string OldPassword, string NewPassword)
         {
 
-            string ChangePasswordReturnValue = iuserRepository.ChangePassword(UserName, OldPassword, NewPassword, ConfirmPassword);
+            string ChangePasswordReturnValue = iuserRepository.ChangePassword(UserName, OldPassword, NewPassword);
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ChangePasswordReturnValue));
         }

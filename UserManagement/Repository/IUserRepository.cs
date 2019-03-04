@@ -16,6 +16,6 @@ namespace UserManagement.Repository
 
         string CreateUser(string un, string pw);
 
-        string ChangePassword(string UserName, string OldPassword, string NewPassword, string ConfirmPassword);
+        string ChangePassword(string UserName, string OldPassword, string NewPassword);
     }
 }

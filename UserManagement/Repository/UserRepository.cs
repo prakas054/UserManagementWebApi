@@ -32,9 +32,7 @@ namespace UserManagement.Repository
                     while (dr.Read())
                     {
                         Users UsersObj = new Users();
-                        //  Membership MembershipObj = new Membership();
                         UsersObj._UserName = dr["UserName"].ToString();
-                        // MembershipObj._Password = dr["Password"].ToString();
                         UD.Add(UsersObj);
                     }
                 }
@@ -47,6 +45,9 @@ namespace UserManagement.Repository
         }
         public List<Users> GetRole()
         {
+            //ConnectionFactory CF = new ConnectionFactory();
+            //SqlConnection CNN = CF.GetConnection();
+            //CNN.Open();
             throw new NotImplementedException();
         }
 
@@ -88,6 +89,7 @@ namespace UserManagement.Repository
         {
             string UN = un;
             string PW = pw;
+
             string QryToInsertUN = "Insert Into aspnet_Users ([ApplicationId], [UserId], [UserName], [LoweredUserName], [LastActivityDate] )" +
                           "values((select[ApplicationId] from aspnet_Applications where ApplicationName = 'default'),NEWID(), '" + un + "', '" + un + "', GETDATE())";
 
@@ -120,16 +122,15 @@ namespace UserManagement.Repository
             }
         }
 
-        public string ChangePassword(string UserName, string OldPassword, string NewPassword, string ConfirmPassword)
+        public string ChangePassword(string UserName, string OldPassword, string NewPassword)
         {
             string UN = UserName;
             string OP = OldPassword;
             string NP = NewPassword;
-            string CP = ConfirmPassword;
 
             string QryToGetPW = "select [Password] from [dbo].[aspnet_Membership] where [UserId] = (select [UserId] from [dbo].[aspnet_Users] where [UserName] = '" + UN + "')";
 
-            string QryToUpdatePW = "UPDATE [dbo].[aspnet_Membership] SET[Password] = '"+CP+"' WHERE [UserId] = (select[UserId] from[dbo].[aspnet_Users] where[UserName] = '"+UN+"')";
+            string QryToUpdatePW = "UPDATE [dbo].[aspnet_Membership] SET[Password] = '"+NP+"' WHERE [UserId] = (select[UserId] from[dbo].[aspnet_Users] where[UserName] = '"+UN+"')";
 
             try
             {
@@ -149,16 +150,9 @@ namespace UserManagement.Repository
 
                     if (obj._Password.Equals(OP))
                     {
-                        if (NP.Equals(CP))
-                        {
                             SqlCommand cmdToUpdate = new SqlCommand(QryToUpdatePW, con);
                             con.Open();
                             cmdToUpdate.ExecuteReader();
-                        }
-                        else
-                        {
-                            return "New Password and Confirm password are not matching";
-                        }
                     }
                     else
                     {
