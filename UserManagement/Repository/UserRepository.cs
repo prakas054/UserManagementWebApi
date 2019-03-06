@@ -45,22 +45,46 @@ namespace UserManagement.Repository
         }
         public List<Users> GetRole()
         {
-            //ConnectionFactory CF = new ConnectionFactory();
+            ConnectionFactory CF = new ConnectionFactory();
+            CF.GetConnection.Open();
             //SqlConnection CNN = CF.GetConnection();
+            //SqlConnection CNN = CF.GetConnection.Open();
             //CNN.Open();
             throw new NotImplementedException();
         }
 
         public List<Users> GetUserById(string id)
         {
-            throw new NotImplementedException();
+            string qry = "select [UserName] from [dbo].[aspnet_Users] where [UserId] = '"+id+"'";
+            try
+            {
+                List<Users> UD = new List<Users>();
+                using (SqlConnection con = new SqlConnection(CN))
+                {
+                    SqlCommand cmd = new SqlCommand(qry, con);
+                    con.Open();
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        Users UsersObj = new Users();
+                        UsersObj._UserName = dr["UserName"].ToString();
+                        UD.Add(UsersObj);
+                    }
+                }
+                return UD;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public string LoginUser(string un, string pw)
         {
             string UN = un;
             string PW = pw;
-            string qry = "select * from aspnet_Users where UserName =  '" + UN + "' and MobileAlias = '" + PW + "'";
+            string qry = "select password[Password] from[dbo].[aspnet_Membership] where[UserId] = (select[UserId] from[dbo].[aspnet_Users] where[UserName] = '"+UN+"' )";
 
             try
             {
@@ -70,14 +94,20 @@ namespace UserManagement.Repository
                     con.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
 
+                    Membership obj = new Membership();
+
                     while (dr.Read())
                     {
-                        Users User = new Users();
-                        User._UserName = dr["UserName"].ToString();
-                        // User.PassWord = dr["MobileAlias"].ToString();
+                        obj._Password = dr["Password"].ToString();
                     }
+                    con.Close();
+
+                    if (obj._Password == null) { return "User not present"; }
+
+                    else if(obj._Password != PW) { return "Invalid Password"; }
+
                 }
-                return UN;
+                return "Successfully Login";
             }
             catch (Exception e)
             {
@@ -91,7 +121,7 @@ namespace UserManagement.Repository
             string PW = pw;
 
             string QryToInsertUN = "Insert Into aspnet_Users ([ApplicationId], [UserId], [UserName], [LoweredUserName], [LastActivityDate] )" +
-                          "values((select[ApplicationId] from aspnet_Applications where ApplicationName = 'default'),NEWID(), '" + un + "', '" + un + "', GETDATE())";
+                          "values((select[ApplicationId] from aspnet_Applications where ApplicationName = 'default'),NEWID(), '" + un + "', LOWER('" + un + "'), GETDATE())";
 
             string QryToInsertPW = "Insert Into aspnet_Membership ([ApplicationId], [UserId], [Password], [PasswordFormat], [PasswordSalt], [IsApproved], [IsLockedOut], [CreateDate]," +
                               " [LastLoginDate],[LastPasswordChangedDate], [LastLockoutDate], [FailedPasswordAttemptCount], [FailedPasswordAttemptWindowStart],[FailedPasswordAnswerAttemptCount], " +
@@ -156,7 +186,7 @@ namespace UserManagement.Repository
                     }
                     else
                     {
-                        return "UserId and password doesnot match";
+                        return "UserName and password doesnot match";
                     }
                 }
                 return "Password reset Sucessfully";

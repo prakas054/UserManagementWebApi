@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 
 namespace UserManagement.Tests
 {
@@ -9,6 +10,7 @@ namespace UserManagement.Tests
         [TestMethod]
         public void TestMethod1()
         {
+
         }
     }
 }
