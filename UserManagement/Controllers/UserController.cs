@@ -25,28 +25,15 @@ namespace UserManagement.Controllers
         [Route("GetAllUsers")]
         public IHttpActionResult GetAllUsers()
         {
-            List<Users> ListOfUser = new List<Users>();
-            var all = iuserRepository.GetAllUser();
-
-            foreach (var x in all)
-            {
-                Users UsersObj = new Users();
-               // Membership MembershipObj = new Membership();
-                UsersObj._UserName = x._UserName;
-                //MembershipObj._Password = x._Password;
-                ListOfUser.Add(UsersObj);
-            }
-            var response = ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ListOfUser));
-            return response;
+            List<Users> ListOfUser = iuserRepository.GetAllUser();
+            return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ListOfUser));
         }
 
         [HttpGet]
         [Route("LoginUser/{sun}/{spw}")]
         public IHttpActionResult LoginUser(string sun, string spw)
         {
-            string UN = sun;
-            string PW = spw;
-            string UserNameReturnValue = iuserRepository.LoginUser(UN, PW);
+            string UserNameReturnValue = iuserRepository.LoginUser(sun, spw);
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, UserNameReturnValue));
         }
 

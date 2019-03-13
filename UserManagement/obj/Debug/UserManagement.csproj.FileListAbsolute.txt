@@ -50,3 +50,6 @@ D:\DotNet_Program\UserManagement\UserManagement\bin\NLog.xml
 D:\DotNet_Program\UserManagement\UserManagement\obj\Debug\UserManagement.csprojResolveAssemblyReference.cache
 D:\DotNet_Program\UserManagement\UserManagement\bin\DataAccess.dll
 D:\DotNet_Program\UserManagement\UserManagement\bin\DataAccess.pdb
+D:\DotNet_Program\UserManagement\UserManagement\bin\Autofac.Integration.WebApi.pdb
+D:\DotNet_Program\UserManagement\UserManagement\bin\DataAccess.dll.config
+D:\DotNet_Program\UserManagement\UserManagement\bin\Newtonsoft.Json.pdb

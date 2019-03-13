@@ -11,11 +11,11 @@ namespace UserManagement.Repository
     {
         string CN = ConfigurationManager.ConnectionStrings["SqlServices"].ConnectionString;
 
-        IConnectionFactory _connectionFactory;
-        public UserRepository(IConnectionFactory connectionFactory)
-        {
-            _connectionFactory = connectionFactory;
-        }
+        //IConnectionFactory _connectionFactory;
+        //public UserRepository(IConnectionFactory connectionFactory)
+        //{
+        //    _connectionFactory = connectionFactory;
+        //}
 
         public List<Users> GetAllUser()
         {
@@ -37,6 +37,8 @@ namespace UserManagement.Repository
                     }
                 }
                 return UD;
+
+                // return _connectionFactory.
             }
             catch (Exception e)
             {
@@ -45,46 +47,15 @@ namespace UserManagement.Repository
         }
         public List<Users> GetRole()
         {
-            ConnectionFactory CF = new ConnectionFactory();
-            CF.GetConnection.Open();
-            //SqlConnection CNN = CF.GetConnection();
-            //SqlConnection CNN = CF.GetConnection.Open();
-            //CNN.Open();
             throw new NotImplementedException();
-        }
-
-        public List<Users> GetUserById(string id)
-        {
-            string qry = "select [UserName] from [dbo].[aspnet_Users] where [UserId] = '"+id+"'";
-            try
-            {
-                List<Users> UD = new List<Users>();
-                using (SqlConnection con = new SqlConnection(CN))
-                {
-                    SqlCommand cmd = new SqlCommand(qry, con);
-                    con.Open();
-                    SqlDataReader dr = cmd.ExecuteReader();
-
-                    while (dr.Read())
-                    {
-                        Users UsersObj = new Users();
-                        UsersObj._UserName = dr["UserName"].ToString();
-                        UD.Add(UsersObj);
-                    }
-                }
-                return UD;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
         }
 
         public string LoginUser(string un, string pw)
         {
             string UN = un;
             string PW = pw;
-            string qry = "select password[Password] from[dbo].[aspnet_Membership] where[UserId] = (select[UserId] from[dbo].[aspnet_Users] where[UserName] = '"+UN+"' )";
+            string qry = "select u.[UserId] from [dbo].[aspnet_Users] u inner join [dbo].[aspnet_Membership] m "+
+                          " on u.UserId = m.UserId where u.UserName = '"+UN+"' and m.Password = '"+PW+"' ";
 
             try
             {
@@ -94,20 +65,10 @@ namespace UserManagement.Repository
                     con.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
 
-                    Membership obj = new Membership();
-
-                    while (dr.Read())
-                    {
-                        obj._Password = dr["Password"].ToString();
-                    }
-                    con.Close();
-
-                    if (obj._Password == null) { return "User not present"; }
-
-                    else if(obj._Password != PW) { return "Invalid Password"; }
+                    if (dr.Read()) return ("Successfully Login");
 
                 }
-                return "Successfully Login";
+                return "Invalid UserName or password";
             }
             catch (Exception e)
             {
@@ -135,13 +96,15 @@ namespace UserManagement.Repository
                     SqlCommand cmdForUN = new SqlCommand(QryToInsertUN, con);
                     con.Open();
                     cmdForUN.ExecuteReader();
+                    cmdForUN.CommandText = QryToInsertPW;
+                    //SqlCommand cmdForPW = new SqlCommand(QryToInsertPW, con);
+                    // con.Open();
+                    cmdForUN.ExecuteReader();
                 }
 
                 using (SqlConnection con = new SqlConnection(CN))
                 {
-                    SqlCommand cmdForPW = new SqlCommand(QryToInsertPW, con);
-                    con.Open();
-                    cmdForPW.ExecuteReader();
+
                 }
                 return "Successfully SignUp";
             }

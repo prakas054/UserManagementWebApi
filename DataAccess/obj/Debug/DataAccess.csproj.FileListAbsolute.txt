@@ -2,4 +2,13 @@ D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\DataAccess.dll
 D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\DataAccess.pdb
 D:\DotNet_Program\UserManagement\DataAccess\obj\Debug\DataAccess.dll
 D:\DotNet_Program\UserManagement\DataAccess\obj\Debug\DataAccess.pdb
-D:\DotNet_Program\UserManagement\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\Newtonsoft.Json.dll
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\System.Net.Http.Formatting.dll
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\System.Web.Http.dll
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\System.Web.Http.WebHost.dll
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\Newtonsoft.Json.xml
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\System.Net.Http.Formatting.xml
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\System.Web.Http.xml
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\System.Web.Http.WebHost.xml
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\DataAccess.dll.config
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\Newtonsoft.Json.pdb
