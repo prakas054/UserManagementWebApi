@@ -5,10 +5,12 @@ using UserManagement.Models;
 using System.Web.Http.Results;
 using System.Net.Http;
 using System.Net;
+using System;
+using System.Data.SqlClient;
 
 namespace UserManagement.Controllers
 {
-    [RoutePrefix("api/UserController")]
+    [RoutePrefix("api/Users")]
     public class UserController : ApiController
     {
 
@@ -25,30 +27,40 @@ namespace UserManagement.Controllers
         [Route("GetAllUsers")]
         public IHttpActionResult GetAllUsers()
         {
-            List<Users> ListOfUser = iuserRepository.GetAllUser();
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ListOfUser));
+            try
+            {
+                List<Users> ListOfUser = iuserRepository.GetAllUser();
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ListOfUser));
+            }
+            catch (SqlException e)
+            {
+                var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent(e.Message)
+                };
+                throw new HttpResponseException(message);
+            }
         }
 
         [HttpGet]
-        [Route("LoginUser/{sun}/{spw}")]
-        public IHttpActionResult LoginUser(string sun, string spw)
+        [Route("Login")]
+        public IHttpActionResult Login(string sun, string spw)
         {
-            string UserNameReturnValue = iuserRepository.LoginUser(sun, spw);
+            string UserNameReturnValue = iuserRepository.Login(sun, spw);
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, UserNameReturnValue));
         }
 
         [HttpPost]
-        [Route("CreateUser/{sun}/{spw}")]
-        public IHttpActionResult CreateUser(string sun, string spw)
+        [Route("Create")]
+        public IHttpActionResult Create(string sun, string spw)
 
         {
-            string CreateUserReturnValue = iuserRepository.CreateUser(sun, spw);
+            string CreateUserReturnValue = iuserRepository.Create(sun, spw);
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, CreateUserReturnValue));
         }
 
         [HttpPut]
-        [Route("ChangePassword/{UserName}/{OldPassword}/{NewPassword}")]
 
         public IHttpActionResult ChangePassword(string UserName, string OldPassword, string NewPassword)
         {

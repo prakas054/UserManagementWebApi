@@ -21,10 +21,10 @@ namespace UserManagement.Test
             LoginUserDC obj = new LoginUserDC();
             _IUserRepository = Substitute.For<IUserRepository>();
             var UController = new UserController(_IUserRepository);
-            _IUserRepository.LoginUser("User06", "Pwd06").Returns(obj.LoginUserMethod("User06", "Pwd06"));
+            _IUserRepository.Login("User06", "Pwd06").Returns(obj.LoginUserMethod("User06", "Pwd06"));
 
             //act
-            string actual = _IUserRepository.LoginUser("User06", "Pwd06");
+            string actual = _IUserRepository.Login("User06", "Pwd06");
             String expected = obj.LoginUserMethod("User06", "Pwd06");
 
             //assert
@@ -39,12 +39,13 @@ namespace UserManagement.Test
             //arrange
             _UserModel = Substitute.For<UserModel>();
             GetSampleUser obj = new GetSampleUser();
-            List <UserModel> CalledList = obj.UserList;
+            List<UserModel> CalledList = new List<UserModel>();
+               CalledList =   obj.UserList;
 
             
             _IUserRepository = Substitute.For<IUserRepository>();
             var UController = new UserController(_IUserRepository);
-            _IUserRepository.GetAllUser().Returns(CalledList);
+           // _IUserRepository.GetAllUser().Returns(CalledList);
 
             //act
 

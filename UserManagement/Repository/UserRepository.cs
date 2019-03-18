@@ -37,12 +37,12 @@ namespace UserManagement.Repository
                     }
                 }
                 return UD;
-
-                // return _connectionFactory.
             }
-            catch (Exception e)
+
+            catch (Exception e )
             {
-                throw e;
+                 throw e;
+                
             }
         }
         public List<Users> GetRole()
@@ -50,7 +50,7 @@ namespace UserManagement.Repository
             throw new NotImplementedException();
         }
 
-        public string LoginUser(string un, string pw)
+        public string Login(string un, string pw)
         {
             string UN = un;
             string PW = pw;
@@ -70,24 +70,28 @@ namespace UserManagement.Repository
                 }
                 return "Invalid UserName or password";
             }
+            catch (SqlException e)
+            {
+                return e.Message;
+            }
             catch (Exception e)
             {
-                throw e;
+                return e.Message;
             }
         }
 
-        public string CreateUser(string un, string pw)
+        public string Create(string un, string pw)
         {
             string UN = un;
             string PW = pw;
 
             string QryToInsertUN = "Insert Into aspnet_Users ([ApplicationId], [UserId], [UserName], [LoweredUserName], [LastActivityDate] )" +
-                          "values((select[ApplicationId] from aspnet_Applications where ApplicationName = 'default'),NEWID(), '" + un + "', LOWER('" + un + "'), GETDATE())";
+                          "values((select[ApplicationId] from aspnet_Applications where ApplicationName = 'MyApplication'),NEWID(), '" + un + "', LOWER('" + un + "'), GETDATE())";
 
             string QryToInsertPW = "Insert Into aspnet_Membership ([ApplicationId], [UserId], [Password], [PasswordFormat], [PasswordSalt], [IsApproved], [IsLockedOut], [CreateDate]," +
                               " [LastLoginDate],[LastPasswordChangedDate], [LastLockoutDate], [FailedPasswordAttemptCount], [FailedPasswordAttemptWindowStart],[FailedPasswordAnswerAttemptCount], " +
                               "[FailedPasswordAnswerAttemptWindowStart]) values ((select[ApplicationId] from aspnet_Users where UserName = '" + un + "'), " +
-                              "(select[UserId] from aspnet_Users where UserName = '" + un + "'), '" + pw + "', 0, 'NA', 0, 0, GETDATE(), GETDATE(), GETDATE(), GETDATE(), 0, GETDATE(), 0, GETDATE()); ";
+                              "(select[UserId] from aspnet_Users where UserName = '" + un + "'), '" + pw + "', 0, 'NA', 0, 0, GETDATE(), GETDATE(), GETDATE(), GETDATE(), 0, GETDATE(), 0, GETDATE()) ";
 
             try
             {
@@ -96,16 +100,26 @@ namespace UserManagement.Repository
                     SqlCommand cmdForUN = new SqlCommand(QryToInsertUN, con);
                     con.Open();
                     cmdForUN.ExecuteReader();
-                    cmdForUN.CommandText = QryToInsertPW;
-                    //SqlCommand cmdForPW = new SqlCommand(QryToInsertPW, con);
-                    // con.Open();
-                    cmdForUN.ExecuteReader();
+                    cmdForUN.CommandText = QryToInsertUN;
+
+                    cmdForUN.Dispose();
+                    con.Close();
+
+                    SqlCommand cmdForPW = new SqlCommand(QryToInsertPW, con);
+                    con.Open();
+                    cmdForPW.ExecuteReader();
+                    cmdForPW.CommandText = QryToInsertPW;
+                    con.Close();
+
                 }
 
-                using (SqlConnection con = new SqlConnection(CN))
-                {
+                //using (SqlConnection con = new SqlConnection(CN))
+                //{
+                //    SqlCommand cmdForPW = new SqlCommand(QryToInsertPW, con);
+                //     con.Open();
+                //    cmdForUN.ExecuteReader();
 
-                }
+                //}
                 return "Successfully SignUp";
             }
             catch (Exception e)
@@ -154,9 +168,15 @@ namespace UserManagement.Repository
                 }
                 return "Password reset Sucessfully";
             }
+            catch (SqlException e)
+            {
+                return e.Message;
+
+            }
+
             catch (Exception e)
             {
-                throw e;
+                return e.Message;
 
             }
         }

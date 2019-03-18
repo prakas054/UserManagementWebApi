@@ -10,8 +10,8 @@ namespace UserManagement.Repository
     {
         List<Users> GetAllUser();
         List<Users> GetRole( );
-        string LoginUser(string un, string pw);
-        string CreateUser(string un, string pw);
+        string Login(string un, string pw);
+        string Create(string un, string pw);
         string ChangePassword(string UserName, string OldPassword, string NewPassword);
 
     }
