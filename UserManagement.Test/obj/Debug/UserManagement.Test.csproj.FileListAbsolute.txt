@@ -46,3 +46,6 @@ D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Autofac.Extras.NS
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Newtonsoft.Json.pdb
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\DataAccess.dll.config
+D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\WebActivatorEx.dll
+D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Swashbuckle.Core.dll
+D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Microsoft.Web.Infrastructure.dll

@@ -12,3 +12,6 @@ D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\System.Web.Http.xml
 D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\System.Web.Http.WebHost.xml
 D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\DataAccess.dll.config
 D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\Newtonsoft.Json.pdb
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\DotNet_Program\UserManagement\DataAccess\bin\Debug\WebActivatorEx.dll
+D:\DotNet_Program\UserManagement\DataAccess\obj\Debug\DataAccess.csprojResolveAssemblyReference.cache

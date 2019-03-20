@@ -11,13 +11,13 @@ using System.Data.SqlClient;
 namespace UserManagement.Controllers
 {
     [RoutePrefix("api/Users")]
-    public class UserController : ApiController
+    public class UsersController : ApiController
     {
 
         IUserRepository iuserRepository;
 
 
-        public UserController(IUserRepository _IUserRepository)
+        public UsersController(IUserRepository _IUserRepository)
         {
             iuserRepository = _IUserRepository;
 
@@ -44,28 +44,28 @@ namespace UserManagement.Controllers
 
         [HttpGet]
         [Route("Login")]
-        public IHttpActionResult Login(string sun, string spw)
+        public IHttpActionResult Login(string UserName, string Password)
         {
-            string UserNameReturnValue = iuserRepository.Login(sun, spw);
+            string UserNameReturnValue = iuserRepository.Login(UserName, Password);
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, UserNameReturnValue));
         }
 
         [HttpPost]
-        [Route("Create")]
-        public IHttpActionResult Create(string sun, string spw)
+       // [Route("Create")]
+        public IHttpActionResult Create(string UserName, string Password)
 
         {
-            string CreateUserReturnValue = iuserRepository.Create(sun, spw);
+            string CreateUserReturnValue = iuserRepository.Create(UserName, Password);
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, CreateUserReturnValue));
         }
 
         [HttpPut]
-
-        public IHttpActionResult ChangePassword(string UserName, string OldPassword, string NewPassword)
+       // [Route("ChangePassword")]
+        public IHttpActionResult ChangePassword(string UserName, string CurrentPassword, string NewPassword)
         {
 
-            string ChangePasswordReturnValue = iuserRepository.ChangePassword(UserName, OldPassword, NewPassword);
+            string ChangePasswordReturnValue = iuserRepository.ChangePassword(UserName, CurrentPassword, NewPassword);
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ChangePasswordReturnValue));
         }

@@ -97,35 +97,22 @@ namespace UserManagement.Repository
             {
                 using (SqlConnection con = new SqlConnection(CN))
                 {
-                    SqlCommand cmdForUN = new SqlCommand(QryToInsertUN, con);
+                    SqlCommand cmd = new SqlCommand(QryToInsertUN, con);
                     con.Open();
-                    cmdForUN.ExecuteReader();
-                    cmdForUN.CommandText = QryToInsertUN;
+                    cmd.ExecuteNonQuery();
 
-                    cmdForUN.Dispose();
-                    con.Close();
-
-                    SqlCommand cmdForPW = new SqlCommand(QryToInsertPW, con);
-                    con.Open();
-                    cmdForPW.ExecuteReader();
-                    cmdForPW.CommandText = QryToInsertPW;
-                    con.Close();
-
+                    cmd.CommandText = QryToInsertPW;
+                    cmd.ExecuteNonQuery();
                 }
-
-                //using (SqlConnection con = new SqlConnection(CN))
-                //{
-                //    SqlCommand cmdForPW = new SqlCommand(QryToInsertPW, con);
-                //     con.Open();
-                //    cmdForUN.ExecuteReader();
-
-                //}
                 return "Successfully SignUp";
+            }
+            catch (SqlException e)
+            {
+                return e.Message;
             }
             catch (Exception e)
             {
-                throw e;
-
+                return e.Message;
             }
         }
 
@@ -153,13 +140,12 @@ namespace UserManagement.Repository
                     {
                         obj._Password = dr["Password"].ToString();
                     }
-                    con.Close();
+                    dr.Close();
 
-                    if (obj._Password.Equals(OP))
+                    if (obj._Password != null && obj._Password.Equals(OP))
                     {
-                            SqlCommand cmdToUpdate = new SqlCommand(QryToUpdatePW, con);
-                            con.Open();
-                            cmdToUpdate.ExecuteReader();
+                            cmd.CommandText = QryToUpdatePW;
+                            cmd.ExecuteScalar();
                     }
                     else
                     {

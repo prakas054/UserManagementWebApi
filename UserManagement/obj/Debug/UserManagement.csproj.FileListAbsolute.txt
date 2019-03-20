@@ -53,3 +53,6 @@ D:\DotNet_Program\UserManagement\UserManagement\bin\DataAccess.pdb
 D:\DotNet_Program\UserManagement\UserManagement\bin\Autofac.Integration.WebApi.pdb
 D:\DotNet_Program\UserManagement\UserManagement\bin\DataAccess.dll.config
 D:\DotNet_Program\UserManagement\UserManagement\bin\Newtonsoft.Json.pdb
+D:\DotNet_Program\UserManagement\UserManagement\bin\Microsoft.Web.Infrastructure.dll
+D:\DotNet_Program\UserManagement\UserManagement\bin\WebActivatorEx.dll
+D:\DotNet_Program\UserManagement\UserManagement\bin\Swashbuckle.Core.dll

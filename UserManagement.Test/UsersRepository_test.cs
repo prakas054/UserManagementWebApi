@@ -20,7 +20,7 @@ namespace UserManagement.Test
             //arrange
             LoginUserDC obj = new LoginUserDC();
             _IUserRepository = Substitute.For<IUserRepository>();
-            var UController = new UserController(_IUserRepository);
+            var UController = new UsersController(_IUserRepository);
             _IUserRepository.Login("User06", "Pwd06").Returns(obj.LoginUserMethod("User06", "Pwd06"));
 
             //act
@@ -44,7 +44,7 @@ namespace UserManagement.Test
 
             
             _IUserRepository = Substitute.For<IUserRepository>();
-            var UController = new UserController(_IUserRepository);
+            var UController = new UsersController(_IUserRepository);
            // _IUserRepository.GetAllUser().Returns(CalledList);
 
             //act

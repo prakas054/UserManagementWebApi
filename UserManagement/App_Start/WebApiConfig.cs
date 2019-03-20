@@ -24,7 +24,7 @@ namespace UserManagement
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             builder.RegisterType<UserRepository>().As<IUserRepository>();
-            builder.RegisterType<UserController>();
+            builder.RegisterType<UsersController>();
             builder.RegisterType<ConnectionFactory>().As<IConnectionFactory>();
             builder.RegisterType<Users>();
 
