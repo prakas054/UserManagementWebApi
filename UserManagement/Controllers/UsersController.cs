@@ -29,12 +29,12 @@ namespace UserManagement.Controllers
         {
             try
             {
-                List<Users> ListOfUser = iuserRepository.GetAllUser();
+                IEnumerable<Users> ListOfUser = iuserRepository.GetAllUser();
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ListOfUser));
             }
             catch (SqlException e)
             {
-                var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
+                var message = new HttpResponseMessage(HttpStatusCode.NotFound)
                 {
                     Content = new StringContent(e.Message)
                 };
@@ -46,28 +46,58 @@ namespace UserManagement.Controllers
         [Route("Login")]
         public IHttpActionResult Login(string UserName, string Password)
         {
-            string UserNameReturnValue = iuserRepository.Login(UserName, Password);
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, UserNameReturnValue));
+            if (UserName == null || Password == null)
+            {
+                var message = new HttpResponseMessage(HttpStatusCode.NotFound)
+                {
+                    Content = new StringContent(string.Format("User name or Password not found"))
+
+                };
+                throw new HttpResponseException(message);
+            }
+            else
+            {
+                string UserNameReturnValue = iuserRepository.Login(UserName, Password);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, UserNameReturnValue));
+            }
         }
 
         [HttpPost]
-       // [Route("Create")]
+        [Route("Create")]
         public IHttpActionResult Create(string UserName, string Password)
-
         {
-            string CreateUserReturnValue = iuserRepository.Create(UserName, Password);
-
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, CreateUserReturnValue));
+            if (UserName == null || Password == null)
+            {
+                var message = new HttpResponseMessage(HttpStatusCode.NotFound)
+                {
+                    Content = new StringContent(string.Format("User name or Password should not be Empty"))
+                };
+                throw new HttpResponseException(message);
+            }
+            else
+            {
+                string CreateUserReturnValue = iuserRepository.Create(UserName, Password);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, CreateUserReturnValue));
+            }
         }
 
         [HttpPut]
-       // [Route("ChangePassword")]
+        [Route("ChangePassword")]
         public IHttpActionResult ChangePassword(string UserName, string CurrentPassword, string NewPassword)
         {
-
-            string ChangePasswordReturnValue = iuserRepository.ChangePassword(UserName, CurrentPassword, NewPassword);
-
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ChangePasswordReturnValue));
+            if (UserName == null || CurrentPassword == null || NewPassword == null)
+            {
+                var message = new HttpResponseMessage(HttpStatusCode.NotFound)
+                {
+                    Content = new StringContent(string.Format("User name or Password should not be Empty"))
+                };
+                throw new HttpResponseException(message);
+            }
+            else
+            {
+                string ChangePasswordReturnValue = iuserRepository.ChangePassword(UserName, CurrentPassword, NewPassword);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ChangePasswordReturnValue));
+            }
         }
 
     }

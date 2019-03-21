@@ -17,7 +17,7 @@ namespace UserManagement.Repository
         //    _connectionFactory = connectionFactory;
         //}
 
-        public List<Users> GetAllUser()
+        public IEnumerable<Users> GetAllUser()
         {
             string qry = "select [UserName] from [dbo].[aspnet_Users]";
             try
@@ -45,7 +45,7 @@ namespace UserManagement.Repository
                 
             }
         }
-        public List<Users> GetRole()
+        public IEnumerable<Users> GetRole()
         {
             throw new NotImplementedException();
         }
