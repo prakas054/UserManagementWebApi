@@ -1,0 +1,5 @@
+2019-03-28 12:15:30,506 [7] INFO UserController - Received GetAll users request
+2019-03-28 12:16:20,867 [16] INFO UserController - Invalid Username or Password---------Invalid UserName or password
+2019-03-28 12:16:23,876 [6] INFO UserController - Invalid Username or Password---------Invalid UserName or password
+2019-03-28 12:16:28,924 [6] INFO UserController - Invalid Username or Password---------Invalid UserName or password
+2019-03-28 12:19:25,511 [6] INFO UserController - Invalid Username or Password---------Invalid UserName or password
