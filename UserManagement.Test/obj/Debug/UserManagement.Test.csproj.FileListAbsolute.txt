@@ -49,3 +49,5 @@ D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\DataAccess.dll.co
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\WebActivatorEx.dll
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Swashbuckle.Core.dll
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\log4net.dll
+D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\log4net.xml

@@ -12,11 +12,8 @@ namespace UserManagement.Controllers
 {
     [RoutePrefix("api/Users")]
     public class UsersController : ApiController
-    {
-
+    {       
         IUserRepository iuserRepository;
-
-
         public UsersController(IUserRepository _IUserRepository)
         {
             iuserRepository = _IUserRepository;
@@ -34,26 +31,27 @@ namespace UserManagement.Controllers
             }
             catch (SqlException e)
             {
-                var message = new HttpResponseMessage(HttpStatusCode.NotFound)
+                var message = new HttpResponseMessage(HttpStatusCode.InternalServerError)
                 {
                     Content = new StringContent(e.Message)
                 };
-                throw new HttpResponseException(message);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.InternalServerError, new HttpResponseException(message)));
+                
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Login")]
         public IHttpActionResult Login(string UserName, string Password)
         {
             if (UserName == null || Password == null)
             {
-                var message = new HttpResponseMessage(HttpStatusCode.NotFound)
+                var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
                     Content = new StringContent(string.Format("User name or Password not found"))
 
                 };
-                throw new HttpResponseException(message);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, new HttpResponseException(message)));
             }
             else
             {
@@ -68,11 +66,11 @@ namespace UserManagement.Controllers
         {
             if (UserName == null || Password == null)
             {
-                var message = new HttpResponseMessage(HttpStatusCode.NotFound)
+                var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
                     Content = new StringContent(string.Format("User name or Password should not be Empty"))
                 };
-                throw new HttpResponseException(message);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, new HttpResponseException(message)));
             }
             else
             {
@@ -87,11 +85,11 @@ namespace UserManagement.Controllers
         {
             if (UserName == null || CurrentPassword == null || NewPassword == null)
             {
-                var message = new HttpResponseMessage(HttpStatusCode.NotFound)
+                var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
                     Content = new StringContent(string.Format("User name or Password should not be Empty"))
                 };
-                throw new HttpResponseException(message);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, new HttpResponseException(message)));
             }
             else
             {

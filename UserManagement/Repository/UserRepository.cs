@@ -10,6 +10,7 @@ namespace UserManagement.Repository
     public class UserRepository : IUserRepository
     {
         string CN = ConfigurationManager.ConnectionStrings["SqlServices"].ConnectionString;
+        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger("UserController");
 
         //IConnectionFactory _connectionFactory;
         //public UserRepository(IConnectionFactory connectionFactory)
@@ -36,13 +37,13 @@ namespace UserManagement.Repository
                         UD.Add(UsersObj);
                     }
                 }
+                _log.Info("Received GetAll users request");
                 return UD;
             }
-
             catch (Exception e )
             {
-                 throw e;
-                
+                _log.Error(e.ToString());
+                throw;
             }
         }
         public IEnumerable<Users> GetRole()
@@ -65,18 +66,19 @@ namespace UserManagement.Repository
                     con.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
 
-                    if (dr.Read()) return ("Successfully Login");
-
+                    if (dr.Read())
+                    {
+                        _log.Info("Successfully Login");
+                        return ("Successfully Login");                        
+                    }
                 }
+                _log.Info("Invalid Username or Password---------Invalid UserName or password");
                 return "Invalid UserName or password";
             }
             catch (SqlException e)
             {
-                return e.Message;
-            }
-            catch (Exception e)
-            {
-                return e.Message;
+                _log.Error(e.ToString());
+                return e.ToString();
             }
         }
 
@@ -104,15 +106,13 @@ namespace UserManagement.Repository
                     cmd.CommandText = QryToInsertPW;
                     cmd.ExecuteNonQuery();
                 }
+                _log.Info("Successfully SignUp");
                 return "Successfully SignUp";
             }
             catch (SqlException e)
             {
-                return e.Message;
-            }
-            catch (Exception e)
-            {
-                return e.Message;
+                _log.Error(e.ToString());
+                return e.ToString();
             }
         }
 
@@ -149,21 +149,17 @@ namespace UserManagement.Repository
                     }
                     else
                     {
+                        _log.Info("Password reset fail");
                         return "UserName and password doesnot match";
                     }
                 }
+                _log.Info("Password reset Sucessfully");
                 return "Password reset Sucessfully";
             }
             catch (SqlException e)
             {
-                return e.Message;
-
-            }
-
-            catch (Exception e)
-            {
-                return e.Message;
-
+                _log.Error(e.ToString());
+                return e.ToString();
             }
         }
     }
