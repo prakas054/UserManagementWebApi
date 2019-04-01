@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using UserManagement.Models;
 using UserManagement.Repository;
 
 namespace UserManagement.Controllers
@@ -19,9 +21,15 @@ namespace UserManagement.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public IHttpActionResult Login(string UserName, string Password)
+        public IHttpActionResult Login([FromBody] JObject data)
         {
-            if (UserName == null || Password == null)
+
+            Users user = new Users();
+            Membership membership = new Membership();
+
+            user._UserName = (string)data["Username"];
+            membership._Password = (string)data["Password"];
+            if (user._UserName == null || membership._Password == null)
             {
                 var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
@@ -32,7 +40,7 @@ namespace UserManagement.Controllers
             }
             else
             {
-                string UserNameReturnValue = iuserRepository.Login(UserName, Password);
+                string UserNameReturnValue = iuserRepository.Login(user._UserName, membership._Password);
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, UserNameReturnValue));
             }
         }
