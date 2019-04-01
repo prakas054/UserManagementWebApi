@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net;
 using System;
 using System.Data.SqlClient;
+using Newtonsoft.Json.Linq;
 
 namespace UserManagement.Controllers
 {
@@ -38,33 +39,20 @@ namespace UserManagement.Controllers
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.InternalServerError, new HttpResponseException(message)));
                 
             }
-        }
-
-        [HttpPost]
-        [Route("Login")]
-        public IHttpActionResult Login(string UserName, string Password)
-        {
-            if (UserName == null || Password == null)
-            {
-                var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
-                {
-                    Content = new StringContent(string.Format("User name or Password not found"))
-
-                };
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, new HttpResponseException(message)));
-            }
-            else
-            {
-                string UserNameReturnValue = iuserRepository.Login(UserName, Password);
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, UserNameReturnValue));
-            }
-        }
+        }       
 
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create(string UserName, string Password)
+        public IHttpActionResult Create([FromBody]JObject data)
         {
-            if (UserName == null || Password == null)
+
+            Users user = new Users();
+            Membership membership = new Membership();
+
+            user._UserName = (string)data["Username"];
+            membership._Password = (string)data["Password"];
+
+            if (user._UserName == null || membership._Password == null)
             {
                 var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
@@ -74,16 +62,22 @@ namespace UserManagement.Controllers
             }
             else
             {
-                string CreateUserReturnValue = iuserRepository.Create(UserName, Password);
+                string CreateUserReturnValue = iuserRepository.Create(user._UserName, membership._Password);
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, CreateUserReturnValue));
             }
         }
 
         [HttpPut]
         [Route("ChangePassword")]
-        public IHttpActionResult ChangePassword(string UserName, string CurrentPassword, string NewPassword)
+        public IHttpActionResult ChangePassword([FromBody] JObject data)
         {
-            if (UserName == null || CurrentPassword == null || NewPassword == null)
+            Users user = new Users();
+            Membership membership = new Membership();
+
+            user._UserName = (string)data["Username"];
+            membership._Password = (string)data["CurrentPassword"];
+            membership._Password = (string)data["NewPassword"];
+            if (user._UserName == null || membership._Password == null || membership._Password == null)
             {
                 var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
@@ -93,7 +87,7 @@ namespace UserManagement.Controllers
             }
             else
             {
-                string ChangePasswordReturnValue = iuserRepository.ChangePassword(UserName, CurrentPassword, NewPassword);
+                string ChangePasswordReturnValue = iuserRepository.ChangePassword(user._UserName, membership._Password, membership._Password);
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ChangePasswordReturnValue));
             }
         }
