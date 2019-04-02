@@ -8,7 +8,7 @@ namespace UserManagement.Repository
     public class UserRepository : IUserRepository<Users>, ISearchUser
     {
         string CN = ConfigurationManager.ConnectionStrings["SqlServices"].ConnectionString;
-        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger("UserController");
+        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger("UserRepository");
 
         public IEnumerable<Users> GetAllUser()
         {
@@ -21,12 +21,12 @@ namespace UserManagement.Repository
                     SqlCommand cmd = new SqlCommand(qry, con);
                     con.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
+                    Users Users = new Users();
 
                     while (dr.Read())
                     {
-                        Users UsersObj = new Users();
-                        UsersObj._UserName = dr["UserName"].ToString();
-                        UD.Add(UsersObj);
+                        Users._UserName = dr["UserName"].ToString();
+                        UD.Add(Users);
                     }
                 }
                 _log.Info("Received GetAll users request");

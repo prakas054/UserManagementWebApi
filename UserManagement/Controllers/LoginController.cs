@@ -11,6 +11,7 @@ namespace UserManagement.Controllers
 {
     public class LoginController : ApiController
     {
+        private static readonly log4net.ILog _log = log4net.LogManager.GetLogger("LoginController");
         IUserRepository<Users> iuserRepository;
         public LoginController(IUserRepository<Users> _IUserRepository)
         {
@@ -26,19 +27,14 @@ namespace UserManagement.Controllers
             var UserName = userObj._UserName;
             var Password = userObj._Password;
 
-            if (UserName == null || Password == null)
+            if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(Password))
             {
-                var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
-                {
-                    Content = new StringContent(string.Format("User name or Password not found"))
-
-                };
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, new HttpResponseException(message)));
+                return ResponseMessage(Request.CreateResponse(406));
             }
             else
             {
                 string UserNameReturnValue = iuserRepository.Login(userObj);
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, UserNameReturnValue));
+                return ResponseMessage(Request.CreateResponse(200));
             }
         }
     }
