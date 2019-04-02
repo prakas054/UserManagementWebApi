@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserManagement.Models;
 
 namespace UserManagement.Test.DummyClasses
 {
@@ -11,15 +12,15 @@ namespace UserManagement.Test.DummyClasses
         public string LoginUserMethod(string UN, string PW)
         {
             GetSampleUser obj = new GetSampleUser();
-            List <UserModel> CalledList = obj.GetUser();
+            List <Users> CalledList = obj.GetUser();
 
             try
             {
-                foreach (UserModel user in CalledList)
+                foreach (Users user in CalledList)
                 {
-                    UserModel UserObj = new UserModel();
-                    UserObj.UserName = CalledList.Find(User1 => User1.UserName == UN).ToString();
-                    UserObj.password = CalledList.Find(User2 => User2.password == PW).ToString();
+                    Users UserObj = new Users();
+                    UserObj._UserName = CalledList.Find(User1 => User1._UserName == UN).ToString();
+                    UserObj._Password = CalledList.Find(User2 => User2._Password == PW).ToString();
                 }
                 return "Sucessfull login";
             }

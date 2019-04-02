@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,8 +11,8 @@ namespace UserManagement.Controllers
 {
     public class LoginController : ApiController
     {
-        IUserRepository iuserRepository;
-        public LoginController(IUserRepository _IUserRepository)
+        IUserRepository<Users> iuserRepository;
+        public LoginController(IUserRepository<Users> _IUserRepository)
         {
             iuserRepository = _IUserRepository;
 
@@ -21,15 +20,13 @@ namespace UserManagement.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public IHttpActionResult Login([FromBody] JObject data)
+        public IHttpActionResult Login([FromBody] Users userObj)
         {
 
-            Users user = new Users();
-            Membership membership = new Membership();
+            var UserName = userObj._UserName;
+            var Password = userObj._Password;
 
-            user._UserName = (string)data["Username"];
-            membership._Password = (string)data["Password"];
-            if (user._UserName == null || membership._Password == null)
+            if (UserName == null || Password == null)
             {
                 var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
@@ -40,7 +37,7 @@ namespace UserManagement.Controllers
             }
             else
             {
-                string UserNameReturnValue = iuserRepository.Login(user._UserName, membership._Password);
+                string UserNameReturnValue = iuserRepository.Login(userObj);
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, UserNameReturnValue));
             }
         }

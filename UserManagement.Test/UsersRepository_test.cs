@@ -5,26 +5,28 @@ using UserManagement.Controllers;
 using NSubstitute;
 using UserManagement.Test.DummyClasses;
 using System.Collections.Generic;
+using UserManagement.Models;
 
 namespace UserManagement.Test
 {
     [TestClass]
     public class UserRepository_Test
     {
-        private IUserRepository _IUserRepository;
-        private UserModel _UserModel;
+        private IUserRepository<Users> _ISearchUser;
+        private Users _Users;
+        private ISearchUser _IUserRepository;
 
         [TestMethod]
         public void LoginUserTestMethod()
         {
             //arrange
             LoginUserDC obj = new LoginUserDC();
-            _IUserRepository = Substitute.For<IUserRepository>();
-            var UController = new UsersController(_IUserRepository);
-            _IUserRepository.Login("User06", "Pwd06").Returns(obj.LoginUserMethod("User06", "Pwd06"));
+            _ISearchUser = Substitute.For<IUserRepository<Users>>();
+            var UController = new UsersController(_ISearchUser, _IUserRepository);
+            _ISearchUser.Login(_Users).Returns(obj.LoginUserMethod("User06", "Pwd06"));
 
             //act
-            string actual = _IUserRepository.Login("User06", "Pwd06");
+            string actual = _ISearchUser.Login(_Users);
             String expected = obj.LoginUserMethod("User06", "Pwd06");
 
             //assert
@@ -37,20 +39,20 @@ namespace UserManagement.Test
         {
 
             //arrange
-            _UserModel = Substitute.For<UserModel>();
+            _Users = Substitute.For<Users>();
             GetSampleUser obj = new GetSampleUser();
-            List<UserModel> CalledList = new List<UserModel>();
+            List<Users> CalledList = new List<Users>();
                CalledList =   obj.UserList;
 
             
-            _IUserRepository = Substitute.For<IUserRepository>();
-            var UController = new UsersController(_IUserRepository);
+            _ISearchUser = Substitute.For<IUserRepository<Users>>();
+            var UController = new UsersController(_ISearchUser);
            // _IUserRepository.GetAllUser().Returns(CalledList);
 
             //act
 
             //assert
-            Assert.AreEqual("Successfully Login", UController.GetAllUsers());
+          //  Assert.AreEqual("Successfully Login", UController.GetAllUsers(Users userObj));
 
         }
 

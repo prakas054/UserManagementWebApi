@@ -7,18 +7,26 @@ using System.Net.Http;
 using System.Net;
 using System;
 using System.Data.SqlClient;
-using Newtonsoft.Json.Linq;
 
 namespace UserManagement.Controllers
 {
     [RoutePrefix("api/Users")]
     public class UsersController : ApiController
     {       
-        IUserRepository iuserRepository;
-        public UsersController(IUserRepository _IUserRepository)
+        IUserRepository<Users> iuserRepository;
+        ISearchUser isearchUser;
+        private IUserRepository<Users> _ISearchUser;
+
+        public UsersController(IUserRepository<Users> _IUserRepository, ISearchUser _ISearchUser)
         {
             iuserRepository = _IUserRepository;
+            isearchUser = _ISearchUser;
 
+        }
+
+        public UsersController(IUserRepository<Users> searchUser)
+        {
+            _ISearchUser = searchUser;
         }
 
         [HttpGet]
@@ -27,7 +35,7 @@ namespace UserManagement.Controllers
         {
             try
             {
-                IEnumerable<Users> ListOfUser = iuserRepository.GetAllUser();
+                IEnumerable<Users> ListOfUser = isearchUser.GetAllUser();
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ListOfUser));
             }
             catch (SqlException e)
@@ -39,20 +47,16 @@ namespace UserManagement.Controllers
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.InternalServerError, new HttpResponseException(message)));
                 
             }
-        }       
+        }
 
         [HttpPost]
         [Route("Create")]
-        public IHttpActionResult Create([FromBody]JObject data)
+        public IHttpActionResult Create([FromBody] Users userObj)
         {
+            var UserName = userObj._UserName;
+            var Password = userObj._Password;
 
-            Users user = new Users();
-            Membership membership = new Membership();
-
-            user._UserName = (string)data["Username"];
-            membership._Password = (string)data["Password"];
-
-            if (user._UserName == null || membership._Password == null)
+            if (UserName == null || Password == null)
             {
                 var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
@@ -62,22 +66,20 @@ namespace UserManagement.Controllers
             }
             else
             {
-                string CreateUserReturnValue = iuserRepository.Create(user._UserName, membership._Password);
+                string CreateUserReturnValue = iuserRepository.Create(userObj);
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, CreateUserReturnValue));
             }
         }
 
         [HttpPut]
         [Route("ChangePassword")]
-        public IHttpActionResult ChangePassword([FromBody] JObject data)
+        public IHttpActionResult ChangePassword([FromBody] Users userObj)
         {
-            Users user = new Users();
-            Membership membership = new Membership();
+            var UserName = userObj._UserName;
+            var CurrentPassword = userObj._Password;
+            var NewPassword = userObj._Password;
 
-            user._UserName = (string)data["Username"];
-            membership._Password = (string)data["CurrentPassword"];
-            membership._Password = (string)data["NewPassword"];
-            if (user._UserName == null || membership._Password == null || membership._Password == null)
+            if (UserName == null || CurrentPassword == null || NewPassword == null)
             {
                 var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
                 {
@@ -87,7 +89,7 @@ namespace UserManagement.Controllers
             }
             else
             {
-                string ChangePasswordReturnValue = iuserRepository.ChangePassword(user._UserName, membership._Password, membership._Password);
+                string ChangePasswordReturnValue = iuserRepository.ChangePassword(userObj);
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, ChangePasswordReturnValue));
             }
         }

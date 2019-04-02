@@ -10,7 +10,6 @@ D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\NSubstitute.dll
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\System.Threading.Tasks.Extensions.dll
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\UserManagement.dll
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Autofac.dll
-D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\DataAccess.dll
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\System.Web.Http.WebHost.dll
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Autofac.Integration.WebApi.dll
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\System.Net.Http.Formatting.dll
@@ -25,7 +24,6 @@ D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\System.Threading.
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\System.Web.Http.xml
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Autofac.pdb
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Autofac.xml
-D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\DataAccess.pdb
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\System.Web.Http.WebHost.xml
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Autofac.Integration.WebApi.xml
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\System.Net.Http.Formatting.xml
@@ -45,7 +43,6 @@ D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Autofac.Extras.NS
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Autofac.Extras.NSubstitute.xml
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Newtonsoft.Json.pdb
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
-D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\DataAccess.dll.config
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\WebActivatorEx.dll
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Swashbuckle.Core.dll
 D:\DotNet_Program\UserManagement\UserManagement.Test\bin\Debug\Microsoft.Web.Infrastructure.dll

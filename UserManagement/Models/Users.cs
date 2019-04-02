@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 
@@ -9,10 +10,10 @@ namespace UserManagement.Models
     /// </summary>
     public class Users
     {
-        public string _ApplicationId { get; set; }
-        public string _UserId { get; set; }
         public string _UserName {get; set;}
-        public string _LoweredUserName {get; set; }
-        public string _LastActivityDate { get; set; }
+        public string _Password { get; set; }
+        public string _ChangePassword { get; set; }
+
+        public IEnumerable<string> Roles;
     }
 }

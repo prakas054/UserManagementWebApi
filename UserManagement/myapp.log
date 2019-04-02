@@ -8,3 +8,10 @@
 2019-04-01 11:38:59,967 [5] INFO UserController - Invalid Username or Password---------Invalid UserName or password
 2019-04-01 11:40:04,496 [5] INFO UserController - Invalid Username or Password---------Invalid UserName or password
 2019-04-01 11:41:01,650 [6] INFO UserController - Successfully Login
+2019-04-02 11:55:38,437 [6] INFO UserController - Received GetAll users request
+2019-04-02 11:57:51,583 [5] INFO UserController - Successfully SignUp
+2019-04-02 12:00:10,145 [5] INFO UserController - Successfully Login
+2019-04-02 12:00:48,191 [7] INFO UserController - Password reset Sucessfully
+2019-04-02 12:49:38,711 [6] INFO UserController - Successfully SignUp
+2019-04-02 12:51:28,239 [6] INFO UserController - Successfully Login
+2019-04-02 13:58:39,295 [8] INFO UserController - Received GetAll users request

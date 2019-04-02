@@ -5,7 +5,6 @@ using System.Web.Http;
 using UserManagement.Controllers;
 using UserManagement.Models;
 using UserManagement.Repository;
-using DataAccess.Infrastructure;
 
 namespace UserManagement
 {
@@ -23,10 +22,10 @@ namespace UserManagement
             var builder = new ContainerBuilder();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            builder.RegisterType<UserRepository>().As<IUserRepository>();
-            builder.RegisterType<UsersController>();
-            builder.RegisterType<ConnectionFactory>().As<IConnectionFactory>();
-            builder.RegisterType<Users>();
+            builder.RegisterType<UserRepository>().As<IUserRepository<Users>>().SingleInstance();
+            builder.RegisterType<UserRepository>().As<ISearchUser>().SingleInstance();
+            builder.RegisterType<UsersController>().SingleInstance();
+            builder.RegisterType<Users>().SingleInstance();
 
             // OPTIONAL: Register the Autofac filter provider.
             builder.RegisterWebApiFilterProvider(configs);

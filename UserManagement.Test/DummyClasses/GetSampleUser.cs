@@ -3,54 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserManagement.Models;
 
 namespace UserManagement.Test.DummyClasses
 {
-    public class UserModel
-    {
-        public string UserName { get; set;}
-        public string password { get; set; }
-
-    }
     public class GetSampleUser
     {
-        public List<UserModel> UserList = new List<UserModel>();
-        public List<UserModel> GetUser()
+        public List<Users> UserList = new List<Users>();
+        public List<Users> GetUser()
         {
-            new UserModel
+            new Users
             {
-                UserName = "User01",
-                password = "Pwd01"
+                _UserName = "User01",
+                _Password = "Pwd01"
             };
 
-            new UserModel
+            new Users
             {
-                UserName = "User02",
-                password = "Pwd02"
+                _UserName = "User02",
+                _Password = "Pwd02"
             };
 
-            new UserModel
+            new Users
             {
-                UserName = "User03",
-                password = "Pwd03"
+                _UserName = "User03",
+                _Password = "Pwd03"
             };
 
-            new UserModel
+            new Users
             {
-                UserName = "User04",
-                password = "Pwd04"
+                _UserName = "User04",
+                _Password = "Pwd04"
             };
 
-            new UserModel
+            new Users
             {
-                UserName = "User05",
-                password = "Pwd05"
+                _UserName = "User05",
+                _Password = "Pwd05"
             };
 
-            new UserModel
+            new Users
             {
-                UserName = "User06",
-                password = "Pwd06"
+                _UserName = "User06",
+                _Password = "Pwd06"
             };
 
             return UserList;

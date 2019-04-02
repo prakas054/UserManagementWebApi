@@ -3,20 +3,12 @@ using System.Collections.Generic;
 using UserManagement.Models;
 using System.Configuration;
 using System.Data.SqlClient;
-using DataAccess.Infrastructure;
-
 namespace UserManagement.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository<Users>, ISearchUser
     {
         string CN = ConfigurationManager.ConnectionStrings["SqlServices"].ConnectionString;
         private static readonly log4net.ILog _log = log4net.LogManager.GetLogger("UserController");
-
-        //IConnectionFactory _connectionFactory;
-        //public UserRepository(IConnectionFactory connectionFactory)
-        //{
-        //    _connectionFactory = connectionFactory;
-        //}
 
         public IEnumerable<Users> GetAllUser()
         {
@@ -51,10 +43,10 @@ namespace UserManagement.Repository
             throw new NotImplementedException();
         }
 
-        public string Login(string un, string pw)
+        public string Login(Users userObj)
         {
-            string UN = un;
-            string PW = pw;
+            string UN = userObj._UserName;
+            string PW = userObj._Password;
             string qry = "select u.[UserId] from [dbo].[aspnet_Users] u inner join [dbo].[aspnet_Membership] m "+
                           " on u.UserId = m.UserId where u.UserName = '"+UN+"' and m.Password = '"+PW+"' ";
 
@@ -82,18 +74,18 @@ namespace UserManagement.Repository
             }
         }
 
-        public string Create(string un, string pw)
+        public string Create(Users userObj)
         {
-            string UN = un;
-            string PW = pw;
+            var UN = userObj._UserName;
+            var PW = userObj._Password;
 
             string QryToInsertUN = "Insert Into aspnet_Users ([ApplicationId], [UserId], [UserName], [LoweredUserName], [LastActivityDate] )" +
-                          "values((select[ApplicationId] from aspnet_Applications where ApplicationName = 'MyApplication'),NEWID(), '" + un + "', LOWER('" + un + "'), GETDATE())";
+                          "values((select[ApplicationId] from aspnet_Applications where ApplicationName = 'MyApplication'),NEWID(), '" + UN + "', LOWER('" + UN + "'), GETDATE())";
 
             string QryToInsertPW = "Insert Into aspnet_Membership ([ApplicationId], [UserId], [Password], [PasswordFormat], [PasswordSalt], [IsApproved], [IsLockedOut], [CreateDate]," +
                               " [LastLoginDate],[LastPasswordChangedDate], [LastLockoutDate], [FailedPasswordAttemptCount], [FailedPasswordAttemptWindowStart],[FailedPasswordAnswerAttemptCount], " +
-                              "[FailedPasswordAnswerAttemptWindowStart]) values ((select[ApplicationId] from aspnet_Users where UserName = '" + un + "'), " +
-                              "(select[UserId] from aspnet_Users where UserName = '" + un + "'), '" + pw + "', 0, 'NA', 0, 0, GETDATE(), GETDATE(), GETDATE(), GETDATE(), 0, GETDATE(), 0, GETDATE()) ";
+                              "[FailedPasswordAnswerAttemptWindowStart]) values ((select[ApplicationId] from aspnet_Users where UserName = '" + UN + "'), " +
+                              "(select[UserId] from aspnet_Users where UserName = '" + UN + "'), '" + PW + "', 0, 'NA', 0, 0, GETDATE(), GETDATE(), GETDATE(), GETDATE(), 0, GETDATE(), 0, GETDATE()) ";
 
             try
             {
@@ -116,11 +108,11 @@ namespace UserManagement.Repository
             }
         }
 
-        public string ChangePassword(string UserName, string OldPassword, string NewPassword)
+        public string ChangePassword(Users userObj)
         {
-            string UN = UserName;
-            string OP = OldPassword;
-            string NP = NewPassword;
+            var UN = userObj._UserName;
+            var CP = userObj._Password;
+            var NP = userObj._ChangePassword;
 
             string QryToGetPW = "select [Password] from [dbo].[aspnet_Membership] where [UserId] = (select [UserId] from [dbo].[aspnet_Users] where [UserName] = '" + UN + "')";
 
@@ -134,7 +126,7 @@ namespace UserManagement.Repository
                     con.Open();
                     SqlDataReader dr = cmd.ExecuteReader();
 
-                    Membership obj = new Membership();
+                    Users obj = new Users();
 
                     if (dr.Read())
                     {
@@ -142,7 +134,7 @@ namespace UserManagement.Repository
                     }
                     dr.Close();
 
-                    if (obj._Password != null && obj._Password.Equals(OP))
+                    if (obj._Password != null && obj._Password.Equals(CP))
                     {
                             cmd.CommandText = QryToUpdatePW;
                             cmd.ExecuteScalar();
