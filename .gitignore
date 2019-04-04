@@ -1,6 +1,7 @@
 UserManagement/bin/
 UserManagement/obj/
 packages/
+UserManagement.Test/
 UserManagement.Test/bin/
-UserManagement.Test/bin/
+
 

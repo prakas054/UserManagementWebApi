@@ -31,7 +31,7 @@ namespace UserManagement.Controllers
             catch (Exception e)
             {
                 _log.Error(e.ToString());
-                return ResponseMessage(Request.CreateResponse(500));                
+                return InternalServerError();
             }
         }
 
@@ -44,12 +44,12 @@ namespace UserManagement.Controllers
 
             if (UserName.Equals(null) || Password.Equals(null) )
             {
-                return ResponseMessage(Request.CreateResponse(406));
+                return NotFound();
             }
             else
             {
                 string CreateUserReturnValue = _userRepository.Create(userObj);
-                return ResponseMessage(Request.CreateResponse(200));
+                return Ok();
             }
         }
 
@@ -63,12 +63,12 @@ namespace UserManagement.Controllers
 
             if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(CurrentPassword) || string.IsNullOrEmpty(NewPassword))
             {
-                return ResponseMessage(Request.CreateResponse(406));
+                return NotFound();
             }
             else
             {
                 string ChangePasswordReturnValue = _userRepository.ChangePassword(user);
-                return ResponseMessage(Request.CreateResponse(200));
+                return Ok();
             }
         }
     }

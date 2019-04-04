@@ -29,7 +29,7 @@ namespace UserManagement.Repository
                         UD.Add(Users);
                     }
                 }
-                _log.Info("Received GetAll users request");
+                _log.Info("Responded Successfully");
                 return UD;
             }
             catch (Exception e )

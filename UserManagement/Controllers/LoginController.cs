@@ -12,10 +12,10 @@ namespace UserManagement.Controllers
     public class LoginController : ApiController
     {
         private static readonly log4net.ILog _log = log4net.LogManager.GetLogger("LoginController");
-        IUserRepository<Users> iuserRepository;
-        public LoginController(IUserRepository<Users> _IUserRepository)
+        IUserRepository<Users> _userRepository;
+        public LoginController(IUserRepository<Users> userRepository)
         {
-            iuserRepository = _IUserRepository;
+            _userRepository = userRepository;
 
         }
 
@@ -33,7 +33,7 @@ namespace UserManagement.Controllers
             }
             else
             {
-                string UserNameReturnValue = iuserRepository.Login(userObj);
+                string UserNameReturnValue = _userRepository.Login(userObj);
                 return ResponseMessage(Request.CreateResponse(200));
             }
         }
